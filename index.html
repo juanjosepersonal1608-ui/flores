@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Ti - Jardín Encantado</title>
+  <!-- Fuentes elegantes de Google Fonts para la frase romántica -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================
+       VARIABLES Y REINICIO BASE
+       ========================================= */
+    :root {
+      --sky-top: #070919;
+      --sky-mid: #131c3a;
+      --sky-horizon: #263954;
+      --swamp-glow: #4cd137;
+      --firefly-color: #e8ff6b;
+      --petal-pink-light: #ff9a9e;
+      --petal-pink-dark: #f6416c;
+      --petal-violet-light: #c471ed;
+      --petal-violet-dark: #7f00ff;
+      --petal-gold-light: #ffe259;
+      --petal-gold-dark: #ffa751;
+      --stem-light: #6ab04c;
+      --stem-dark: #218c74;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 90%, var(--sky-horizon) 0%, var(--sky-mid) 45%, var(--sky-top) 100%);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: #f8f9fa;
+      user-select: none;
+    }
+
+    /* =========================================
+       ESCENA PRINCIPAL Y CIELO ESTRELLADO
+       ========================================= */
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    /* Luna mágica en el fondo */
+    .moon {
+      position: absolute;
+      top: 7vh;
+      right: 12vw;
+      width: clamp(65px, 9vw, 110px);
+      height: clamp(65px, 9vw, 110px);
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fffde4 0%, #f7e9a0 60%, rgba(247, 233, 160, 0.2) 100%);
+      box-shadow:
+        0 0 40px 12px rgba(255, 250, 205, 0.35),
+        0 0 90px 30px rgba(162, 217, 206, 0.18);
+      opacity: 0.9;
+      animation: moonPulse 6s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    @keyframes moonPulse {
+      0% { transform: scale(1); box-shadow: 0 0 40px 12px rgba(255, 250, 205, 0.32), 0 0 90px 30px rgba(162, 217, 206, 0.15); }
+      100% { transform: scale(1.04); box-shadow: 0 0 55px 18px rgba(255, 250, 205, 0.48), 0 0 110px 40px rgba(162, 217, 206, 0.25); }
+    }
+
+    /* Estrellas parpadeantes */
+    .stars {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #fff, 0 0 12px #a3e4d7;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite alternate;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1.3); }
+    }
+
+    /* Silueta de colinas lejanas del bosque */
+    .hills-back {
+      position: absolute;
+      bottom: 8vh;
+      left: -10%;
+      width: 120%;
+      height: 26vh;
+      background: radial-gradient(ellipse at 30% 100%, #10252b 0%, #09151c 80%);
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      z-index: 2;
+      opacity: 0.85;
+    }
+
+    .hills-front {
+      position: absolute;
+      bottom: -4vh;
+      left: -15%;
+      width: 130%;
+      height: 22vh;
+      background: linear-gradient(180deg, #0d2b22 0%, #05140f 100%);
+      border-radius: 50% 50% 0 0 / 80% 80% 0 0;
+      box-shadow: 0 -10px 35px rgba(76, 209, 55, 0.12);
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    /* =========================================
+       TARJETA CON LA FRASE DE SHREK Y PELÍCULAS
+       ========================================= */
+    .quote-container {
+      position: relative;
+      z-index: 20;
+      margin-top: clamp(1.5rem, 5vh, 4rem);
+      padding: clamp(1.2rem, 3vw, 2.2rem) clamp(1.5rem, 4vw, 3rem);
+      max-width: min(90vw, 720px);
+      text-align: center;
+      background: rgba(13, 22, 42, 0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 24px;
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        inset 0 0 25px rgba(255, 215, 130, 0.08);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealQuote 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .quote-container.pulse {
+      transform: scale(1.03);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.65),
+        0 0 30px rgba(255, 202, 212, 0.25);
+    }
+
+    @keyframes revealQuote {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .quote-ornament {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.7rem, 1.4vw, 0.85rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #b8e994;
+      margin-bottom: 0.75rem;
+      opacity: 0.9;
+    }
+
+    .quote-text {
+      font-size: clamp(1.2rem, 2.6vw, 1.8rem);
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #fffaf0;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75);
+      transition: opacity 0.3s ease;
+    }
+
+    .quote-text span.highlight {
+      color: #ffcad4;
+      font-weight: 600;
+    }
+
+    .quote-author {
+      margin-top: 0.9rem;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+      letter-spacing: 0.15em;
+      color: #f8c291;
+      opacity: 0.9;
+      transition: opacity 0.3s ease;
+    }
+
+    .hint-badge {
+      margin-top: 0.8rem;
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.65);
+      letter-spacing: 0.04em;
+    }
+
+    /* =========================================
+       LUCIÉRNAGAS MÁGICAS FLOTANDO
+       ========================================= */
+    .fireflies {
+      position: absolute;
+      inset: 0;
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .firefly {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ffffb5;
+      box-shadow:
+        0 0 8px 2px var(--firefly-color),
+        0 0 18px 5px rgba(186, 220, 88, 0.6);
+      animation:
+        fireflyFloat var(--float-dur, 12s) ease-in-out infinite alternate,
+        fireflyGlow var(--glow-dur, 2.5s) ease-in-out infinite alternate;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes fireflyFloat {
+      0% { transform: translate(0, 0) scale(0.8); }
+      33% { transform: translate(var(--dx1, 40px), var(--dy1, -50px)) scale(1.1); }
+      66% { transform: translate(var(--dx2, -30px), var(--dy2, -90px)) scale(0.9); }
+      100% { transform: translate(var(--dx3, 25px), var(--dy3, -30px)) scale(1.2); }
+    }
+
+    @keyframes fireflyGlow {
+      0% { opacity: 0.15; }
+      100% { opacity: 1; }
+    }
+
+    /* =========================================
+       JARDÍN DE FLORES INTERACTIVAS
+       ========================================= */
+    .garden {
+      position: absolute;
+      bottom: 4vh;
+      left: 0;
+      width: 100%;
+      height: 56vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Contenedor individual de cada flor con balanceo al viento */
+    .flower-wrapper {
+      position: absolute;
+      bottom: 0;
+      transform-origin: bottom center;
+      animation: swayWind var(--sway-dur, 5s) ease-in-out infinite alternate;
+      animation-delay: var(--sway-delay, 0s);
+      pointer-events: auto;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .flower-wrapper:hover .blossom {
+      filter: brightness(1.18) drop-shadow(0 0 18px rgba(255, 255, 255, 0.45));
+    }
+
+    @keyframes swayWind {
+      0% { transform: rotate(calc(var(--sway-angle, 4deg) * -1)); }
+      50% { transform: rotate(calc(var(--sway-angle, 4deg) * 0.4)); }
+      100% { transform: rotate(var(--sway-angle, 4deg)); }
+    }
+
+    /* Tallo curvo elegante hecho con bordes CSS */
+    .stem {
+      position: relative;
+      width: var(--stem-w, 8px);
+      height: var(--stem-h, 240px);
+      background: linear-gradient(90deg, var(--stem-dark), var(--stem-light), var(--stem-dark));
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(106, 176, 76, 0.25);
+    }
+
+    /* Hojas que nacen del tallo y se mecen suavemente */
+    .leaf {
+      position: absolute;
+      width: var(--leaf-w, 58px);
+      height: var(--leaf-h, 28px);
+      background: linear-gradient(135deg, #7bed9f 0%, #2ed573 45%, #1e824c 100%);
+      box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.25), 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .leaf::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 8%;
+      width: 82%;
+      height: 1.5px;
+      background: rgba(255, 255, 255, 0.28);
+      transform: translateY(-50%);
+      border-radius: 2px;
+    }
+
+    .leaf.left {
+      right: 70%;
+      top: var(--leaf-top, 48%);
+      border-radius: 100% 0 100% 0;
+      transform-origin: right center;
+      animation: leafFlutterLeft 3.8s ease-in-out infinite alternate;
+    }
+
+    .leaf.right {
+      left: 70%;
+      top: var(--leaf-top, 64%);
+      border-radius: 0 100% 0 100%;
+      transform-origin: left center;
+      animation: leafFlutterRight 4.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes leafFlutterLeft {
+      0% { transform: rotate(-14deg) scale(1); }
+      100% { transform: rotate(-26deg) scale(1.04); }
+    }
+
+    @keyframes leafFlutterRight {
+      0% { transform: rotate(14deg) scale(1); }
+      100% { transform: rotate(26deg) scale(1.04); }
+    }
+
+    /* Cabeza de la flor en la punta del tallo */
+    .blossom {
+      position: absolute;
+      top: calc(var(--flower-size, 110px) * -0.5);
+      left: 50%;
+      width: var(--flower-size, 110px);
+      height: var(--flower-size, 110px);
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: flowerBreathe 4.5s ease-in-out infinite alternate;
+      transition: filter 0.3s ease;
+    }
+
+    .flower-wrapper.clicked .blossom {
+      animation: bloomPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes bloomPop {
+      0% { transform: translateX(-50%) scale(1); }
+      45% { transform: translateX(-50%) scale(1.26) rotate(10deg); }
+      100% { transform: translateX(-50%) scale(1); }
+    }
+
+    @keyframes flowerBreathe {
+      0% { transform: translateX(-50%) scale(0.97) rotate(-2deg); }
+      100% { transform: translateX(-50%) scale(1.04) rotate(2deg); }
+    }
+
+    /* Pétalos individuales dispuestos radialmente */
+    .petal {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      width: calc(var(--flower-size, 110px) * 0.42);
+      height: calc(var(--flower-size, 110px) * 0.54);
+      margin-left: calc(var(--flower-size, 110px) * -0.21);
+      border-radius: 50% 50% 35% 35% / 65% 65% 35% 35%;
+      transform-origin: bottom center;
+      transform: rotate(var(--rot, 0deg));
+      background: radial-gradient(circle at 50% 25%, var(--p-light), var(--p-dark));
+      box-shadow:
+        0 0 15px var(--p-glow, rgba(255, 154, 158, 0.35)),
+        inset 0 4px 10px rgba(255, 255, 255, 0.45),
+        inset 0 -6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Capa interna de pétalos más pequeños para dar volumen 3D */
+    .petal.inner {
+      width: calc(var(--flower-size, 110px) * 0.3);
+      height: calc(var(--flower-size, 110px) * 0.38);
+      margin-left: calc(var(--flower-size, 110px) * -0.15);
+      filter: brightness(1.12);
+      z-index: 2;
+    }
+
+    /* Centro luminoso de la flor (estambres y polen dorado) */
+    .center {
+      position: relative;
+      z-index: 5;
+      width: calc(var(--flower-size, 110px) * 0.28);
+      height: calc(var(--flower-size, 110px) * 0.28);
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff9c4 0%, #fbc531 55%, #e1b12c 100%);
+      box-shadow:
+        0 0 14px 4px rgba(251, 197, 49, 0.75),
+        0 0 28px 8px rgba(255, 234, 167, 0.45),
+        inset 0 -3px 6px rgba(180, 110, 0, 0.5);
+      animation: centerGlow 3s ease-in-out infinite alternate;
+    }
+
+    .center::before {
+      content: '';
+      position: absolute;
+      inset: 22%;
+      border-radius: 50%;
+      background-image:
+        radial-gradient(#d35400 1.5px, transparent 1.5px),
+        radial-gradient(#fff 1px, transparent 1px);
+      background-size: 6px 6px;
+      background-position: 0 0, 3px 3px;
+      opacity: 0.65;
+    }
+
+    @keyframes centerGlow {
+      0% { box-shadow: 0 0 12px 3px rgba(251, 197, 49, 0.65), 0 0 24px 6px rgba(255, 234, 167, 0.35); }
+      100% { box-shadow: 0 0 20px 6px rgba(251, 197, 49, 0.95), 0 0 38px 12px rgba(255, 234, 167, 0.65); }
+    }
+
+    /* Partículas flotantes al hacer clic en una flor */
+    .sparkle-burst {
+      position: fixed;
+      pointer-events: none;
+      z-index: 30;
+      font-size: 1.25rem;
+      animation: floatHeart 1.4s ease-out forwards;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(0.6);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx, 0px), var(--ty, -90px)) scale(1.35);
+      }
+    }
+
+    /* =========================================
+       VARIACIONES DE COLOR PARA CADA FLOR
+       ========================================= */
+    .flower-hero {
+      left: 50%;
+      margin-left: -4px;
+      z-index: 12;
+      --stem-h: clamp(230px, 34vh, 330px);
+      --stem-w: 9px;
+      --flower-size: clamp(115px, 16vw, 155px);
+      --sway-dur: 5.4s;
+      --sway-angle: 3.5deg;
+      --p-light: #ffccd5;
+      --p-dark: #ff4d6d;
+      --p-glow: rgba(255, 77, 109, 0.45);
+    }
+
+    .flower-left-1 {
+      left: 28%;
+      z-index: 11;
+      --stem-h: clamp(180px, 27vh, 265px);
+      --stem-w: 7px;
+      --flower-size: clamp(90px, 12vw, 120px);
+      --sway-dur: 4.8s;
+      --sway-delay: -1.2s;
+      --sway-angle: 4.5deg;
+      --p-light: #e0aaff;
+      --p-dark: #7b2cbf;
+      --p-glow: rgba(157, 78, 221, 0.4);
+    }
+
+    .flower-right-1 {
+      left: 71%;
+      z-index: 11;
+      --stem-h: clamp(190px, 28vh, 275px);
+      --stem-w: 7px;
+      --flower-size: clamp(92px, 12.5vw, 125px);
+      --sway-dur: 5.1s;
+      --sway-delay: -2.4s;
+      --sway-angle: 4.2deg;
+      --p-light: #fff3b0;
+      --p-dark: #f77f00;
+      --p-glow: rgba(247, 127, 0, 0.4);
+    }
+
+    .flower-left-2 {
+      left: 12%;
+      z-index: 9;
+      --stem-h: clamp(140px, 21vh, 210px);
+      --stem-w: 6px;
+      --flower-size: clamp(72px, 10vw, 96px);
+      --sway-dur: 4.3s;
+      --sway-delay: -0.7s;
+      --sway-angle: 5.2deg;
+      --p-light: #caf0f8;
+      --p-dark: #0096c7;
+      --p-glow: rgba(0, 180, 216, 0.38);
+    }
+
+    .flower-right-2 {
+      left: 86%;
+      z-index: 9;
+      --stem-h: clamp(145px, 22vh, 215px);
+      --stem-w: 6px;
+      --flower-size: clamp(74px, 10vw, 98px);
+      --sway-dur: 4.6s;
+      --sway-delay: -1.9s;
+      --sway-angle: 5deg;
+      --p-light: #ffd6ba;
+      --p-dark: #f25c54;
+      --p-glow: rgba(242, 92, 84, 0.38);
+    }
+
+    /* Brizna de hierba / follaje silvestre en la base */
+    .grass-tuft {
+      position: absolute;
+      bottom: 2vh;
+      width: 100%;
+      height: 12vh;
+      z-index: 13;
+      pointer-events: none;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+    }
+
+    .blade {
+      width: 8px;
+      height: var(--h, 75px);
+      background: linear-gradient(to top, #081c15, #2d6a4f, #52b788);
+      border-radius: 100% 0 0 0;
+      transform-origin: bottom center;
+      animation: swayWind var(--dur, 3.5s) ease-in-out infinite alternate;
+      animation-delay: var(--delay, 0s);
+      opacity: 0.85;
+    }
+
+    @media (max-width: 600px) {
+      .flower-left-2 { left: 7%; }
+      .flower-left-1 { left: 25%; }
+      .flower-right-1 { left: 74%; }
+      .flower-right-2 { left: 91%; }
+      .quote-container {
+        margin-top: 1.2rem;
+        padding: 1rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="scene" aria-label="Jardín encantado con flores animadas y frases de películas">
+    <!-- Luna brillante -->
+    <div class="moon" aria-hidden="true"></div>
+
+    <!-- Cielo estrellado -->
+    <div class="stars" aria-hidden="true">
+      <span class="star" style="top: 8%; left: 10%; width: 3px; height: 3px; --dur: 2.8s; --delay: 0.2s;"></span>
+      <span class="star" style="top: 15%; left: 24%; width: 2px; height: 2px; --dur: 3.5s; --delay: 1.1s;"></span>
+      <span class="star" style="top: 6%; left: 42%; width: 3.5px; height: 3.5px; --dur: 4.1s; --delay: 0.5s;"></span>
+      <span class="star" style="top: 19%; left: 58%; width: 2px; height: 2px; --dur: 2.4s; --delay: 1.7s;"></span>
+      <span class="star" style="top: 11%; left: 73%; width: 3px; height: 3px; --dur: 3.9s; --delay: 0.9s;"></span>
+      <span class="star" style="top: 24%; left: 15%; width: 2.5px; height: 2.5px; --dur: 3.1s; --delay: 2.0s;"></span>
+      <span class="star" style="top: 28%; left: 36%; width: 2px; height: 2px; --dur: 4.5s; --delay: 0.4s;"></span>
+      <span class="star" style="top: 22%; left: 82%; width: 3px; height: 3px; --dur: 2.7s; --delay: 1.3s;"></span>
+      <span class="star" style="top: 34%; left: 66%; width: 2px; height: 2px; --dur: 3.6s; --delay: 2.3s;"></span>
+      <span class="star" style="top: 14%; left: 91%; width: 2.5px; height: 2.5px; --dur: 3.2s; --delay: 0.8s;"></span>
+      <span class="star" style="top: 38%; left: 8%; width: 2px; height: 2px; --dur: 4.0s; --delay: 1.5s;"></span>
+      <span class="star" style="top: 31%; left: 49%; width: 2.5px; height: 2.5px; --dur: 2.9s; --delay: 0.1s;"></span>
+    </div>
+
+    <!-- Tarjeta de frases románticas -->
+    <header class="quote-container" id="quoteCard">
+      <div class="quote-ornament" id="quoteOrnament">✦ Un detalle del bosque encantado ✦</div>
+      <blockquote class="quote-text" id="quoteText">
+        “Vi esta flor y pensé en ti porque es bonita... y bueno, en realidad a mí no me gusta, pero creí que te gustaría porque <span class="highlight">tú sí eres bonita</span>.”
+      </blockquote>
+      <p class="quote-author" id="quoteAuthor">— Shrek a Fiona</p>
+      <p class="hint-badge">✨ Toca cualquier flor para descubrir otra frase de amor ✨</p>
+    </header>
+
+    <!-- Luciérnagas flotando por todo el jardín -->
+    <div class="fireflies" aria-hidden="true">
+      <span class="firefly" style="top: 62%; left: 22%; --float-dur: 11s; --glow-dur: 2.2s; --dx1: 35px; --dy1: -45px; --dx2: -25px; --dy2: -85px; --dx3: 20px; --dy3: -30px;"></span>
+      <span class="firefly" style="top: 68%; left: 46%; --float-dur: 13s; --glow-dur: 2.8s; --delay: -2s; --dx1: -40px; --dy1: -60px; --dx2: 30px; --dy2: -100px; --dx3: -15px; --dy3: -40px;"></span>
+      <span class="firefly" style="top: 58%; left: 74%; --float-dur: 10s; --glow-dur: 2.1s; --delay: -4s; --dx1: 28px; --dy1: -50px; --dx2: -35px; --dy2: -80px; --dx3: 18px; --dy3: -25px;"></span>
+      <span class="firefly" style="top: 75%; left: 34%; --float-dur: 14s; --glow-dur: 3.1s; --delay: -1s; --dx1: 45px; --dy1: -35px; --dx2: -20px; --dy2: -75px; --dx3: 30px; --dy3: -20px;"></span>
+      <span class="firefly" style="top: 64%; left: 61%; --float-dur: 12s; --glow-dur: 2.4s; --delay: -3s; --dx1: -30px; --dy1: -55px; --dx2: 25px; --dy2: -95px; --dx3: -20px; --dy3: -35px;"></span>
+      <span class="firefly" style="top: 72%; left: 15%; --float-dur: 15s; --glow-dur: 2.9s; --delay: -5s; --dx1: 30px; --dy1: -40px; --dx2: -15px; --dy2: -70px; --dx3: 25px; --dy3: -20px;"></span>
+      <span class="firefly" style="top: 70%; left: 85%; --float-dur: 11.5s; --glow-dur: 2.3s; --delay: -2.5s; --dx1: -35px; --dy1: -45px; --dx2: 20px; --dy2: -80px; --dx3: -25px; --dy3: -30px;"></span>
+      <span class="firefly" style="top: 52%; left: 52%; --float-dur: 13.5s; --glow-dur: 2.6s; --delay: -6s; --dx1: 25px; --dy1: -35px; --dx2: -30px; --dy2: -65px; --dx3: 15px; --dy3: -20px;"></span>
+    </div>
+
+    <!-- Colinas del bosque -->
+    <div class="hills-back" aria-hidden="true"></div>
+
+    <!-- Jardín de flores detalladas en CSS -->
+    <section class="garden" aria-label="Flores interactivas">
+      <!-- Flor Izquierda Exterior -->
+      <div class="flower-wrapper flower-left-2" role="button" tabindex="0" aria-label="Flor azul mágica">
+        <div class="stem">
+          <div class="leaf left" style="--leaf-top: 42%; --leaf-w: 44px; --leaf-h: 20px;"></div>
+          <div class="leaf right" style="--leaf-top: 62%; --leaf-w: 42px; --leaf-h: 19px;"></div>
+          <div class="blossom">
+            <div class="petal" style="--rot: 0deg;"></div>
+            <div class="petal" style="--rot: 60deg;"></div>
+            <div class="petal" style="--rot: 120deg;"></div>
+            <div class="petal" style="--rot: 180deg;"></div>
+            <div class="petal" style="--rot: 240deg;"></div>
+            <div class="petal" style="--rot: 300deg;"></div>
+            <div class="petal inner" style="--rot: 30deg;"></div>
+            <div class="petal inner" style="--rot: 90deg;"></div>
+            <div class="petal inner" style="--rot: 150deg;"></div>
+            <div class="petal inner" style="--rot: 210deg;"></div>
+            <div class="petal inner" style="--rot: 270deg;"></div>
+            <div class="petal inner" style="--rot: 330deg;"></div>
+            <div class="center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flor Izquierda Media -->
+      <div class="flower-wrapper flower-left-1" role="button" tabindex="0" aria-label="Flor lavanda mágica">
+        <div class="stem">
+          <div class="leaf left" style="--leaf-top: 38%; --leaf-w: 52px; --leaf-h: 24px;"></div>
+          <div class="leaf right" style="--leaf-top: 58%; --leaf-w: 50px; --leaf-h: 23px;"></div>
+          <div class="blossom">
+            <div class="petal" style="--rot: 0deg;"></div>
+            <div class="petal" style="--rot: 51.4deg;"></div>
+            <div class="petal" style="--rot: 102.8deg;"></div>
+            <div class="petal" style="--rot: 154.2deg;"></div>
+            <div class="petal" style="--rot: 205.7deg;"></div>
+            <div class="petal" style="--rot: 257.1deg;"></div>
+            <div class="petal" style="--rot: 308.5deg;"></div>
+            <div class="petal inner" style="--rot: 25deg;"></div>
+            <div class="petal inner" style="--rot: 77deg;"></div>
+            <div class="petal inner" style="--rot: 128deg;"></div>
+            <div class="petal inner" style="--rot: 180deg;"></div>
+            <div class="petal inner" style="--rot: 231deg;"></div>
+            <div class="petal inner" style="--rot: 282deg;"></div>
+            <div class="petal inner" style="--rot: 334deg;"></div>
+            <div class="center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flor Central Protagonista -->
+      <div class="flower-wrapper flower-hero" role="button" tabindex="0" aria-label="Flor principal de Shrek">
+        <div class="stem">
+          <div class="leaf left" style="--leaf-top: 35%; --leaf-w: 68px; --leaf-h: 32px;"></div>
+          <div class="leaf right" style="--leaf-top: 52%; --leaf-w: 64px; --leaf-h: 30px;"></div>
+          <div class="leaf left" style="--leaf-top: 72%; --leaf-w: 54px; --leaf-h: 25px;"></div>
+          <div class="blossom">
+            <div class="petal" style="--rot: 0deg;"></div>
+            <div class="petal" style="--rot: 45deg;"></div>
+            <div class="petal" style="--rot: 90deg;"></div>
+            <div class="petal" style="--rot: 135deg;"></div>
+            <div class="petal" style="--rot: 180deg;"></div>
+            <div class="petal" style="--rot: 225deg;"></div>
+            <div class="petal" style="--rot: 270deg;"></div>
+            <div class="petal" style="--rot: 315deg;"></div>
+            <div class="petal inner" style="--rot: 22.5deg;"></div>
+            <div class="petal inner" style="--rot: 67.5deg;"></div>
+            <div class="petal inner" style="--rot: 112.5deg;"></div>
+            <div class="petal inner" style="--rot: 157.5deg;"></div>
+            <div class="petal inner" style="--rot: 202.5deg;"></div>
+            <div class="petal inner" style="--rot: 247.5deg;"></div>
+            <div class="petal inner" style="--rot: 292.5deg;"></div>
+            <div class="petal inner" style="--rot: 337.5deg;"></div>
+            <div class="center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flor Derecha Media -->
+      <div class="flower-wrapper flower-right-1" role="button" tabindex="0" aria-label="Flor dorada del bosque">
+        <div class="stem">
+          <div class="leaf right" style="--leaf-top: 40%; --leaf-w: 54px; --leaf-h: 25px;"></div>
+          <div class="leaf left" style="--leaf-top: 60%; --leaf-w: 50px; --leaf-h: 23px;"></div>
+          <div class="blossom">
+            <div class="petal" style="--rot: 0deg;"></div>
+            <div class="petal" style="--rot: 51.4deg;"></div>
+            <div class="petal" style="--rot: 102.8deg;"></div>
+            <div class="petal" style="--rot: 154.2deg;"></div>
+            <div class="petal" style="--rot: 205.7deg;"></div>
+            <div class="petal" style="--rot: 257.1deg;"></div>
+            <div class="petal" style="--rot: 308.5deg;"></div>
+            <div class="petal inner" style="--rot: 25deg;"></div>
+            <div class="petal inner" style="--rot: 77deg;"></div>
+            <div class="petal inner" style="--rot: 128deg;"></div>
+            <div class="petal inner" style="--rot: 180deg;"></div>
+            <div class="petal inner" style="--rot: 231deg;"></div>
+            <div class="petal inner" style="--rot: 282deg;"></div>
+            <div class="petal inner" style="--rot: 334deg;"></div>
+            <div class="center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flor Derecha Exterior -->
+      <div class="flower-wrapper flower-right-2" role="button" tabindex="0" aria-label="Flor coral encantada">
+        <div class="stem">
+          <div class="leaf right" style="--leaf-top: 44%; --leaf-w: 44px; --leaf-h: 20px;"></div>
+          <div class="leaf left" style="--leaf-top: 64%; --leaf-w: 42px; --leaf-h: 19px;"></div>
+          <div class="blossom">
+            <div class="petal" style="--rot: 0deg;"></div>
+            <div class="petal" style="--rot: 60deg;"></div>
+            <div class="petal" style="--rot: 120deg;"></div>
+            <div class="petal" style="--rot: 180deg;"></div>
+            <div class="petal" style="--rot: 240deg;"></div>
+            <div class="petal" style="--rot: 300deg;"></div>
+            <div class="petal inner" style="--rot: 30deg;"></div>
+            <div class="petal inner" style="--rot: 90deg;"></div>
+            <div class="petal inner" style="--rot: 150deg;"></div>
+            <div class="petal inner" style="--rot: 210deg;"></div>
+            <div class="petal inner" style="--rot: 270deg;"></div>
+            <div class="petal inner" style="--rot: 330deg;"></div>
+            <div class="center"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hierba silvestre en primer plano -->
+    <div class="grass-tuft" aria-hidden="true">
+      <span class="blade" style="--h: 65px; --dur: 3.1s; --sway-angle: 6deg;"></span>
+      <span class="blade" style="--h: 85px; --dur: 3.8s; --delay: -1s; --sway-angle: 5deg;"></span>
+      <span class="blade" style="--h: 55px; --dur: 2.9s; --delay: -0.5s; --sway-angle: 7deg;"></span>
+      <span class="blade" style="--h: 95px; --dur: 4.1s; --delay: -2s; --sway-angle: 4deg;"></span>
+      <span class="blade" style="--h: 70px; --dur: 3.4s; --delay: -1.5s; --sway-angle: 6deg;"></span>
+      <span class="blade" style="--h: 90px; --dur: 3.9s; --delay: -0.8s; --sway-angle: 5deg;"></span>
+      <span class="blade" style="--h: 60px; --dur: 3.2s; --delay: -2.2s; --sway-angle: 6deg;"></span>
+      <span class="blade" style="--h: 80px; --dur: 3.7s; --delay: -1.3s; --sway-angle: 5deg;"></span>
+      <span class="blade" style="--h: 68px; --dur: 3.3s; --delay: -0.4s; --sway-angle: 6deg;"></span>
+    </div>
+
+    <!-- Colina frontal que cubre la base de los tallos -->
+    <div class="hills-front" aria-hidden="true"></div>
+  </main>
+
+  <script>
+    // Colección de frases románticas de películas
+    const movieQuotes = [
+      {
+        ornament: "✦ Un detalle del bosque encantado ✦",
+        html: '“Vi esta flor y pensé en ti porque es bonita... y bueno, en realidad a mí no me gusta, pero creí que te gustaría porque <span class="highlight">tú sí eres bonita</span>.”',
+        author: "— Shrek a Fiona (Shrek)"
+      },
+      {
+        ornament: "✦ Una aventura juntos ✦",
+        html: '“Puede que no sea un hombre muy listo, pero <span class="highlight">sé lo que es el amor</span>.”',
+        author: "— Forrest Gump (Forrest Gump)"
+      },
+      {
+        ornament: "✦ Más allá de las estrellas ✦",
+        html: '“El amor es lo único que somos capaces de percibir que <span class="highlight">trasciende las dimensiones del tiempo y del espacio</span>.”',
+        author: "— Dra. Amelia Brand (Interestelar)"
+      },
+      {
+        ornament: "✦ Magia eterna ✦",
+        html: '“¿Después de todo este tiempo? <span class="highlight">Siempre</span>.”',
+        author: "— Severus Snape (Harry Potter)"
+      },
+      {
+        ornament: "✦ Contigo a cualquier parte ✦",
+        html: '“Prefiero compartir <span class="highlight">una sola vida contigo</span> que enfrentar todas las edades de este mundo sola.”',
+        author: "— Arwen (El Señor de los Anillos)"
+      },
+      {
+        ornament: "✦ Amor verdadero ✦",
+        html: '“Te quiero. <span class="highlight">Lo sé</span>.”',
+        author: "— Leia Organa y Han Solo (Star Wars)"
+      },
+      {
+        ornament: "✦ Luz en la oscuridad ✦",
+        html: '“De pronto todo cambió, <span class="highlight">y ahora veo en ti la luz</span>.”',
+        author: "— Rapunzel y Flynn Rider (Enredados)"
+      },
+      {
+        ornament: "✦ Un corazón gigante ✦",
+        html: '“Algunas personas <span class="highlight">valen la pena derretirse</span> por ellas.”',
+        author: "— Olaf (Frozen)"
+      },
+      {
+        ornament: "✦ Destino escrito ✦",
+        html: '“El mejor tipo de amor es aquel que <span class="highlight">despierta el alma</span> y nos hace aspirar a más.”',
+        author: "— Noah Calhoun (Diario de una Pasión)"
+      },
+      {
+        ornament: "✦ Promesa infinita ✦",
+        html: '“Te amaré hasta que se apague la última estrella... <span class="highlight">y después también</span>.”',
+        author: "— Poema de Cine Romántico"
+      }
+    ];
+
+    let currentQuoteIndex = 0;
+
+    const quoteCard = document.getElementById("quoteCard");
+    const quoteOrnament = document.getElementById("quoteOrnament");
+    const quoteText = document.getElementById("quoteText");
+    const quoteAuthor = document.getElementById("quoteAuthor");
+    const flowers = document.querySelectorAll(".flower-wrapper");
+
+    // Función para generar destellos y corazones al tocar una flor
+    function spawnSparkles(x, y) {
+      const symbols = ["✨", "💖", "🌸", "💫", "💛"];
+      for (let i = 0; i < 6; i++) {
+        const spark = document.createElement("span");
+        spark.className = "sparkle-burst";
+        spark.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+        const angle = (Math.PI * 2 * i) / 6 + (Math.random() * 0.5 - 0.25);
+        const distance = 45 + Math.random() * 55;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance - 45;
+
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+        spark.style.setProperty("--tx", `${tx}px`);
+        spark.style.setProperty("--ty", `${ty}px`);
+
+        document.body.appendChild(spark);
+        setTimeout(() => spark.remove(), 1400);
+      }
+    }
+
+    // Cambia a la siguiente frase romántica de película
+    function showNextQuote(flowerEl, clientX, clientY) {
+      // Animación de rebote en la flor tocada
+      flowerEl.classList.remove("clicked");
+      void flowerEl.offsetWidth; // Reinicia la animación CSS
+      flowerEl.classList.add("clicked");
+
+      // Obtener coordenadas si se activó por teclado
+      if (clientX === undefined || clientY === undefined) {
+        const rect = flowerEl.getBoundingClientRect();
+        clientX = rect.left + rect.width / 2;
+        clientY = rect.top + 30;
+      }
+
+      spawnSparkles(clientX, clientY);
+
+      // Avanzar al siguiente mensaje sin repetir el actual
+      currentQuoteIndex = (currentQuoteIndex + 1) % movieQuotes.length;
+      const nextQuote = movieQuotes[currentQuoteIndex];
+
+      // Efecto suave de transición en la tarjeta
+      quoteText.style.opacity = "0";
+      quoteAuthor.style.opacity = "0";
+      quoteCard.classList.add("pulse");
+
+      setTimeout(() => {
+        quoteOrnament.textContent = nextQuote.ornament;
+        quoteText.innerHTML = nextQuote.html;
+        quoteAuthor.textContent = nextQuote.author;
+
+        quoteText.style.opacity = "1";
+        quoteAuthor.style.opacity = "1";
+        quoteCard.classList.remove("pulse");
+      }, 220);
+    }
+
+    // Asignar eventos de clic y teclado a cada flor
+    flowers.forEach((flower) => {
+      flower.addEventListener("click", (e) => {
+        showNextQuote(flower, e.clientX, e.clientY);
+      });
+
+      flower.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          showNextQuote(flower);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
